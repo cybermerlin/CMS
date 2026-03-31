@@ -1,0 +1,54 @@
+## .NET MAUI & .NET
+bin/
+obj/
+*.user
+*.userossc
+*.sln.docstates
+.vs/
+.idea/
+.DS_Store
+
+## MAUI Specific
+# Игнорировать временные файлы сборки MAUI
+/Platforms/Android/bin/
+/Platforms/Android/obj/
+/Platforms/iOS/bin/
+/Platforms/iOS/obj/
+/Platforms/MacCatalyst/bin/
+/Platforms/MacCatalyst/obj/
+/Platforms/Windows/bin/
+/Platforms/Windows/obj/
+
+## Android
+*.apk
+*.aab
+.gradle/
+build/
+local.properties
+
+## iOS
+*.ipa
+*.xcworkspace
+*.xcobjects
+# Игнорировать папки build для iOS
+/Platforms/iOS/build/
+
+## Windows (WinUI)
+x64/
+x86/
+ARM/
+ARM64/
+bld/
+*.appx
+*.appxbundle
+*.appxupload
+*.msix
+*.msixbundle
+*.msixupload
+
+## VS Code
+.vscode/
+
+## Остальное
+*.log
+packages/
