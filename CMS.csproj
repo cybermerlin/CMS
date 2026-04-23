@@ -136,4 +136,16 @@
 		<PackageReference Include="Octokit" Version="14.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Gherkin\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EditorConfigFiles Remove="F:\dev\projects\collective mind\CMS\.editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="F:\dev\projects\collective mind\CMS\.editorconfig" />
+	</ItemGroup>
+
 </Project>
