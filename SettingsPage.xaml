@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CMS.SettingsPage"
+             Title="GitHub настройки">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            <Label Text="GitHub OAuth App Client ID" FontAttributes="Bold" FontSize="18" />
+
+            <VerticalStackLayout Spacing="10">
+                <Button
+                    x:Name="InstructionToggleButton"
+                    Text="Инструкция по настройке GitHub ▶"
+                    FontAttributes="Bold"
+                    Clicked="OnInstructionToggleClicked"
+                    HorizontalOptions="Start" />
+                <VerticalStackLayout x:Name="InstructionContent" IsVisible="False" Spacing="10" Padding="0,10,0,0">
+                    <Label Text="1. Перейдите в GitHub:" FontAttributes="Bold" LineBreakMode="WordWrap" />
+                    <Label
+                        Text="https://github.com/settings/developers"
+                        TextDecorations="Underline"
+                        LineBreakMode="NoWrap"
+                        SemanticProperties.Hint="Открыть ссылку в браузере"
+                        x:Name="GitHubLinkLabel">
+
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem 
+                                    Text="Копировать ссылку"
+                                    Clicked="OnCopyLinkMenuClicked" />
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnGitHubLinkTapped" NumberOfTapsRequired="1" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="2. Создайте OAuth App. В полях для URL можно указывать https://localhost" LineBreakMode="WordWrap" />
+                    <Label Text="3. Поставьте галку в Enable Device Flow. Завершите регистрацию." LineBreakMode="WordWrap" />
+                    <Label Text="4. Вас перенаправит на страницу приложения, где надо скопировать из поля CLIENT ID." LineBreakMode="WordWrap" />
+                    <Label Text="5. Вставьте Client ID в поле ниже и сохраните." LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <Entry x:Name="ClientIdEntry" Placeholder="Вставьте Client ID здесь" />
+            <Button Text="Сохранить" Clicked="OnSaveClicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

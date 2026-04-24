@@ -1,6 +1,25 @@
 # Remove the line below if you want to inherit .editorconfig settings from higher directories
 root = true
 
+[*]
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+end_of_line = lf
+
+
+
+[*.feature]
+indent_size = 2
+indent_style = space
+tab_width = 2
+# Специфичные правила для Gherkin (поддерживаются Reqnroll и некоторыми IDE)
+gherkin_indent_steps = true
+gherkin_indent_datatable = true
+gherkin_indent_examples_table = true
+gherkin_table_cell_padding_size = 1
+
+
 # C# files
 [*.cs]
 

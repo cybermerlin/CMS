@@ -6,6 +6,25 @@
     xmlns:local="clr-namespace:CMS"
     Title="CMS">
 
+    <Shell.ToolbarItems>
+        <ToolbarItem
+            IconImageSource="dotnet_bot.png"
+            Text="Авторизация"
+            Order="Primary"
+            Priority="0"
+            Clicked="OnAuthorizeClicked" />
+    </Shell.ToolbarItems>
+
+    <ShellContent
+        Title="Discussions"
+        ContentTemplate="{DataTemplate local:DiscussionsPage}"
+        Route="DiscussionsPage" />
+
+    <ShellContent
+        Title="Настройки"
+        ContentTemplate="{DataTemplate local:SettingsPage}"
+        Route="SettingsPage" />
+
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"

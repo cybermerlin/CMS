@@ -45,6 +45,7 @@ bld/
 *.msix
 *.msixbundle
 *.msixupload
+/workspaces/CMS/D:
 
 ## VS Code
 .vscode/

@@ -4,7 +4,7 @@ using System.IO;
 
 public static class DatabaseService
 {
-    private static string _dbPath;
+    private static string? _dbPath;
 
     public static LiteDatabase GetConnection()
     {
