@@ -69,24 +69,24 @@
                 </VerticalStackLayout>
             </Border>
 
-            <VerticalStackLayout Padding="20,0" Spacing="10">
+            <VerticalStackLayout Padding="20,0" Spacing="8">
                 <Label Text="{Binding PageTitle, FallbackValue='Последние обсуждения'}"
                        FontAttributes="Bold" FontSize="24" />
-                <Label Text="{Binding Discussions.Count, StringFormat='Count: {0}'}" FontSize="16"
+                <Label Text="{Binding Discussions.Count, StringFormat='Count: {0}'}" FontSize="14"
                        TextColor="Red" />
 
                 <CollectionView ItemsSource="{Binding Discussions}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:DiscussionItem"
                                       xmlns:models="clr-namespace:CMS.Models">
-                            <VerticalStackLayout Padding="10" Spacing="4">
+                            <VerticalStackLayout Padding="8" Spacing="2">
                                 <Label Text="{Binding Url}" FontAttributes="Bold" FontSize="10">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="OnGitHubLinkTapped" NumberOfTapsRequired="1" />
                                     </Label.GestureRecognizers>
                                 </Label>
                                 <Label Text="{Binding answeredAtText}" FontAttributes="Bold" FontSize="10" />
-                                <Label Text="{Binding CreatedAtText}" TextColor="Gray" FontSize="12" />
+                                <Label Text="{Binding CreatedAtText}" TextColor="Gray" FontSize="12" HorizontalTextAlignment="End" />
                                 <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="18" />
                                 <Label Text="{Binding Author}" TextColor="Gray" FontSize="14" />
                                 <Label Text="{Binding BodyPreview}" MaxLines="6" FontSize="16" />

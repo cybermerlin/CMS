@@ -161,8 +161,7 @@ internal partial class DiscussionsPage : ContentPage
         {
             await GetGithubStatuses();
 
-            List<Models.DiscussionItem> latestDiscussions = await GetDiscussions();
-            await ErrorHelper.ReportAsync($"Count: {latestDiscussions.Count}", "in latestDiscussions");
+            List<DiscussionItem> latestDiscussions = await GetDiscussions();
 
             if (latestDiscussions.Count == 0) return;
             MainThread.BeginInvokeOnMainThread(() =>
@@ -181,7 +180,7 @@ internal partial class DiscussionsPage : ContentPage
         }
     }
 
-    private async Task<List<Models.DiscussionItem>> GetDiscussions()
+    private async Task<List<DiscussionItem>> GetDiscussions()
     {
         if (_gitHubService == null) return new();
 
@@ -189,7 +188,7 @@ internal partial class DiscussionsPage : ContentPage
         if (_limits.GraphQLRemaining > 0)
             return (await _gitHubService.GetDiscussionsViaGQLAsync(_owner, _repo)).ToList();
         if (_limits.CoreRemaining > 50){
-            List<Models.DiscussionItem> res = (await _gitHubService.GetDiscussionsViaEventsAsync(_owner, _repo)).ToList();
+            List<DiscussionItem> res = (await _gitHubService.GetDiscussionsViaEventsAsync(_owner, _repo)).ToList();
             if (res.Count == 0)
                 return await GetDiscussionsFromAtom();
             else
@@ -197,5 +196,16 @@ internal partial class DiscussionsPage : ContentPage
         }
 
         return await GetDiscussionsFromAtom();
+    }
+
+    private async void OnGitHubLinkTapped(object? sender, EventArgs e)
+    {
+        if (sender is Label label && label.BindingContext is DiscussionItem item)
+        {
+            if (!string.IsNullOrEmpty(item.Url))
+                await Browser.Default.OpenAsync(new Uri(item.Url), BrowserLaunchMode.SystemPreferred);
+            else
+                await ErrorHelper.ReportAsync("Ссылка на обсуждение не найдена.", "Ошибка");
+        }
     }
 }
