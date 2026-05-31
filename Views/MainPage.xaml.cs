@@ -1,19 +1,20 @@
-﻿using Microsoft.Maui.Accessibility;
+using CMS.Models;
+using CMS.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Maui.Accessibility;
 using Microsoft.Maui.Controls;
 using System;
 
-namespace CMS;
+namespace CMS.Views;
 
 public partial class MainPage : ContentPage
 {
 	int count = 0;
 
-	public MainPage()
-	{
-		InitializeComponent();
-	}
+	public MainPage() => InitializeComponent();
 
-	public void OnCounterClicked(object? sender, EventArgs e)
+
+    public void OnCounterClicked(object? sender, EventArgs e)
 	{
 		count++;
 

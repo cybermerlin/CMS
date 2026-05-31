@@ -1,15 +1,17 @@
+using CMS.Helpers;
+using CMS.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.ApplicationModel.DataTransfer;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 using System;
 
-namespace CMS
+namespace CMS.Views
 {
     [QueryProperty(nameof(AuthorizeAfterSave), "authorize")]
     public partial class SettingsPage : ContentPage
     {
-        private const string GitHubClientIdKey = "github_client_id";
         private const string GitHubDevelopersUrl = "https://github.com/settings/developers";
         private bool _authorizeAfterSave;
 
@@ -22,22 +24,24 @@ namespace CMS
         public SettingsPage()
         {
             InitializeComponent();
-            ClientIdEntry.Text = Preferences.Get(GitHubClientIdKey, string.Empty);
+            ClientIdEntry.Text = Preferences.Get(PreferenceKeys.GitHubClientIdKey, string.Empty);
         }
 
         private async void OnSaveClicked(object? sender, EventArgs e)
         {
-            Preferences.Set(GitHubClientIdKey, ClientIdEntry.Text?.Trim() ?? string.Empty);
+            Preferences.Set(PreferenceKeys.GitHubClientIdKey, ClientIdEntry.Text?.Trim() ?? string.Empty);
 
             if (AuthorizeAfterSave && Shell.Current is AppShell appShell)
             {
                 AuthorizeAfterSave = false;
-                await DisplayAlertAsync("Сохранено", "Client ID сохранён. Запускаем авторизацию...", "Ок");
-                await appShell.StartAuthorizationAsync();
+                await ErrorHelper.LogAndReportAsync(new Exception("Client ID сохранён. Запускаем авторизацию..."), "Saved", displayIt: true);
+                AppShellViewModel? vm = Application.Current?.Handler?.MauiContext?.Services.GetRequiredService<AppShellViewModel>()
+                    ?? throw new InvalidOperationException("AppShellViewModel not registered");
+                vm?.AuthorizeCommand.Execute(null);
                 return;
             }
 
-            await DisplayAlertAsync("Сохранено", "Client ID сохранён. Вернитесь в приложение и повторите подключение.", "Ок");
+            await ErrorHelper.LogAndReportAsync(new Exception("Client ID сохранён. Вернитесь в приложение и повторите подключение."), "Saved", displayIt: true);
         }
 
         private async void OnGitHubLinkTapped(object? sender, EventArgs e)
@@ -62,8 +66,19 @@ namespace CMS
         {
             try
             {
-                await Clipboard.Default.SetTextAsync(GitHubDevelopersUrl);
-                await DisplayAlertAsync("Скопировано", "Ссылка скопирована в буфер обмена.", "Ок");
+                if (sender is MenuFlyoutItem menuItem && menuItem.CommandParameter is string text)
+                {
+                    if (!string.IsNullOrEmpty(text))
+                    {
+                        await Clipboard.Default.SetTextAsync(text);
+                        await DisplayAlertAsync("Скопировано", "Ссылка скопирована в буфер обмена.", "Ок");
+                    }
+                    else
+                    {
+                        await DisplayAlertAsync("Ошибка", "Не удалось скопировать ссылку.", "Ок");
+                    }
+
+                }
             }
             catch
             {

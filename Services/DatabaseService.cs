@@ -2,19 +2,23 @@ using LiteDB;
 using System;
 using System.IO;
 
-public static class DatabaseService
+
+namespace CMS.Services
 {
-    private static string? _dbPath;
-
-    public static LiteDatabase GetConnection()
+    internal static class DatabaseService
     {
-        // Путь: C:\Users\Имя\AppData\Local\GitDiscussionsApp\data.db
-        var appData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        var folder = Path.Combine(appData, "GitDiscussionsApp");
+        private static string? _dbPath;
 
-        if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+        public static LiteDatabase GetConnection()
+        {
+            // Путь: C:\Users\Имя\AppData\Local\GitDiscussionsApp\data.db
+            var appData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var folder = Path.Combine(appData, "GitDiscussionsApp");
 
-        _dbPath = Path.Combine(folder, "discussions.db");
-        return new LiteDatabase(_dbPath);
+            if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+
+            _dbPath = Path.Combine(folder, "discussions.db");
+            return new LiteDatabase(_dbPath);
+        }
     }
 }

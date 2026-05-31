@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CMS.Views.DiscussionsPage"
+             x:ClassModifier="internal"
+             xmlns:models="clr-namespace:CMS.Models"
+             Title="GitHub Discussions">
+
+    <ScrollView>
+        <HorizontalStackLayout Spacing="8">
+            <Border x:Name="LimitsPanel"
+                Padding="10" Stroke="LightGray" StrokeShape="RoundRectangle 4">
+                <VerticalStackLayout>
+                    <Label Text="GitHub API Limits" FontSize="24" FontAttributes="Bold" />
+
+                    <!-- Core -->
+                    <Border Padding="10" Stroke="LightGray" StrokeShape="RoundRectangle 4">
+                        <VerticalStackLayout>
+                            <Label FontSize="18" FontAttributes="Bold">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Core: " />
+                                        <Span Text="{Binding CoreRemaining}" />
+                                        <Span Text=" / " />
+                                        <Span Text="{Binding CoreLimit}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Text="{Binding CoreReset, StringFormat='{0:dd.MM.yyyy HH:mm}'}" 
+                       TextColor="Gray" FontSize="14" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Search -->
+                    <Border Padding="10" Stroke="LightGray" StrokeShape="RoundRectangle 4">
+                        <VerticalStackLayout>
+                            <Label FontSize="18" FontAttributes="Bold">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Search: " />
+                                        <Span Text="{Binding SearchRemaining}" />
+                                        <Span Text=" / " />
+                                        <Span Text="{Binding SearchLimit}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Text="{Binding SearchReset, StringFormat='{0:dd.MM.yyyy HH:mm}'}" 
+                       TextColor="Gray" FontSize="14" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- GraphQL -->
+                    <Border Padding="10" Stroke="LightGray" StrokeShape="RoundRectangle 4">
+                        <VerticalStackLayout>
+                            <Label FontSize="18" FontAttributes="Bold">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="GraphQL: " />
+                                        <Span Text="{Binding GraphQLRemaining}" />
+                                        <Span Text=" / " />
+                                        <Span Text="{Binding GraphQLLimit}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Text="{Binding GraphQLReset, StringFormat='{0:dd.MM.yyyy HH:mm}'}" 
+                       TextColor="Gray" FontSize="14" />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </Border>
+
+            <VerticalStackLayout Padding="20,0" Spacing="10">
+                <Label Text="{Binding PageTitle, FallbackValue='Последние обсуждения'}"
+                       FontAttributes="Bold" FontSize="24" />
+                <Label Text="{Binding Discussions.Count, StringFormat='Count: {0}'}" FontSize="16"
+                       TextColor="Red" />
+
+                <CollectionView ItemsSource="{Binding Discussions}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:DiscussionItem"
+                                      xmlns:models="clr-namespace:CMS.Models">
+                            <VerticalStackLayout Padding="10" Spacing="4">
+                                <Label Text="{Binding Url}" FontAttributes="Bold" FontSize="10">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnGitHubLinkTapped" NumberOfTapsRequired="1" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="{Binding answeredAtText}" FontAttributes="Bold" FontSize="10" />
+                                <Label Text="{Binding CreatedAtText}" TextColor="Gray" FontSize="12" />
+                                <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="18" />
+                                <Label Text="{Binding Author}" TextColor="Gray" FontSize="14" />
+                                <Label Text="{Binding BodyPreview}" MaxLines="6" FontSize="16" />
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+    </ScrollView>
+</ContentPage>

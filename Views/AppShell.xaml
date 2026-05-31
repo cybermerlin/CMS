@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="CMS.Views.AppShell"
+    x:ClassModifier="internal"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:CMS.Views"
+    Title="CMS">
+
+    <Shell.ToolbarItems>
+        <ToolbarItem Text="Back" Command="{Binding BackCommand}"/>
+        <ToolbarItem
+            IconImageSource="dotnet_bot.png"
+            Text="Авторизация"
+            Order="Primary"
+            Priority="0"
+            Command="{Binding AuthorizeCommand}"/>
+        <ToolbarItem Text="Logs" Command="{Binding OpenLogsCommand}" />
+    </Shell.ToolbarItems>
+
+    <FlyoutItem Title="Home">
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+
+    </FlyoutItem>
+    <FlyoutItem Title="Discussions">
+        <ShellContent
+            Title="Discussions"
+            ContentTemplate="{DataTemplate local:DiscussionsPage}"
+            Route="DiscussionsPage" />
+    </FlyoutItem>
+    <FlyoutItem Title="Settings">
+        <ShellContent
+            Title="Settings"
+            ContentTemplate="{DataTemplate local:SettingsPage}"
+            Route="SettingsPage" />
+    </FlyoutItem>
+    <FlyoutItem Title="Logs">
+        <ShellContent
+            Title="Logs"
+            ContentTemplate="{DataTemplate local:LogPage}"
+            Route="LogPage" />
+    </FlyoutItem>
+
+</Shell>
